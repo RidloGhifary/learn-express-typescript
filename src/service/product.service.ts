@@ -31,3 +31,7 @@ export const updateProductToDB = async (id: string, data: ProductProps) => {
     $set: { ...data, updatedAt: new Date() },
   });
 };
+
+export const deleteProductFromDB = async (id: string) => {
+  return await Products.findByIdAndDelete(id);
+};

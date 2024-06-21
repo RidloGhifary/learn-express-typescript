@@ -5,6 +5,7 @@ import {
 } from "../validations/product.validation";
 import {
   createProductToDB,
+  deleteProductFromDB,
   getAllProductsFromDB,
   getProductByIdFromDB,
   updateProductToDB,
@@ -94,6 +95,30 @@ export const UpdateProduct = async (req: Request, res: Response) => {
     res.status(200).json({
       status: true,
       message: "Product updated",
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      status: false,
+      message: err.message,
+    });
+  }
+};
+
+export const DeleteProduct = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const product = await deleteProductFromDB(id);
+
+    if (!product)
+      return res.status(404).json({
+        status: false,
+        message: "Product not found",
+      });
+
+    res.status(200).json({
+      status: true,
+      message: "Product deleted",
     });
   } catch (err: any) {
     res.status(500).json({
