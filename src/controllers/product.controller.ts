@@ -1,9 +1,13 @@
 import { Request, Response } from "express";
-import { productValidation } from "../validations/product.validation";
+import {
+  productValidation,
+  updateProductValidation,
+} from "../validations/product.validation";
 import {
   createProductToDB,
   getAllProductsFromDB,
   getProductByIdFromDB,
+  updateProductToDB,
 } from "../service/product.service";
 
 export const GetProducts = async (req: Request, res: Response) => {
@@ -54,6 +58,42 @@ export const CreateProduct = async (req: Request, res: Response) => {
       status: true,
       message: "Product created",
       data: newProduct,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      status: false,
+      message: err.message,
+    });
+  }
+};
+
+export const UpdateProduct = async (req: Request, res: Response) => {
+  const {
+    params: { id },
+    body: { name, price, stock },
+  } = req;
+
+  const { error, value } = updateProductValidation({ name, price, stock });
+
+  if (error) {
+    return res.status(400).json({
+      status: false,
+      message: error.message,
+    });
+  }
+
+  try {
+    const updatedProduct = await updateProductToDB(id, value);
+
+    if (!updatedProduct)
+      return res.status(404).json({
+        status: false,
+        message: "Product not found",
+      });
+
+    res.status(200).json({
+      status: true,
+      message: "Product updated",
     });
   } catch (err: any) {
     res.status(500).json({

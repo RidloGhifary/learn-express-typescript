@@ -25,3 +25,9 @@ export const getProductByIdFromDB = async (id: string) => {
 export const createProductToDB = async (data: ProductProps) => {
   return await Products.create(data);
 };
+
+export const updateProductToDB = async (id: string, data: ProductProps) => {
+  return await Products.findByIdAndUpdate(id, {
+    $set: { ...data, updatedAt: new Date() },
+  });
+};

@@ -12,3 +12,15 @@ export const productValidation = (payload: ProductProps) => {
 
   return schema.validate(payload);
 };
+
+export const updateProductValidation = (payload: ProductProps) => {
+  const schema = Joi.object({
+    name: Joi.string().min(3).max(65),
+
+    price: Joi.number().min(1),
+
+    stock: Joi.number(),
+  });
+
+  return schema.validate(payload);
+};
