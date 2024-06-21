@@ -3,6 +3,8 @@ import cors from "cors";
 
 import router from "./routers";
 import { logger } from "./utils/logger";
+// ! CONNECT MONGODB
+import "./utils/connectDb";
 
 const app: Application = express();
 const port: number = 3200;
