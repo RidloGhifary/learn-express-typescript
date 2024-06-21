@@ -1,30 +1,10 @@
 import { Request, Response } from "express";
 import { productValidation } from "../validations/product.validation";
 import {
+  createProductToDB,
   getAllProductsFromDB,
   getProductByIdFromDB,
 } from "../service/product.service";
-
-// const products = [
-//   {
-//     id: 1,
-//     name: "Phone",
-//     price: 100,
-//     stock: 10,
-//   },
-//   {
-//     id: 2,
-//     name: "Laptop",
-//     price: 200,
-//     stock: 5,
-//   },
-//   {
-//     id: 3,
-//     name: "Tablet",
-//     price: 300,
-//     stock: 15,
-//   },
-// ];
 
 export const GetProducts = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -54,10 +34,10 @@ export const GetProducts = async (req: Request, res: Response) => {
   });
 };
 
-export const CreateProduct = (req: Request, res: Response) => {
-  const { name, price } = req.body;
+export const CreateProduct = async (req: Request, res: Response) => {
+  const { name, price, stock } = req.body;
 
-  const { error, value } = productValidation({ name, price });
+  const { error, value } = productValidation({ name, price, stock });
 
   if (error) {
     return res.status(400).json({
@@ -66,9 +46,19 @@ export const CreateProduct = (req: Request, res: Response) => {
     });
   }
 
-  res.status(201).json({
-    status: true,
-    message: "Product created",
-    data: value,
-  });
+  try {
+    const newProduct = await createProductToDB(value);
+    await newProduct.save();
+
+    res.status(201).json({
+      status: true,
+      message: "Product created",
+      data: newProduct,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      status: false,
+      message: err.message,
+    });
+  }
 };

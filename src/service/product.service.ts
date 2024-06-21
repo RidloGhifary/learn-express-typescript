@@ -1,4 +1,5 @@
 import Products from "../models/product.model";
+import { ProductProps } from "../types/product.type";
 import { logger } from "../utils/logger";
 
 export const getAllProductsFromDB = async () => {
@@ -19,4 +20,8 @@ export const getProductByIdFromDB = async (id: string) => {
     .catch((error) => {
       logger.error(error);
     });
+};
+
+export const createProductToDB = async (data: ProductProps) => {
+  return await Products.create(data);
 };
