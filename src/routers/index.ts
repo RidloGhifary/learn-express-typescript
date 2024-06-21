@@ -1,5 +1,5 @@
 import { Application, Router } from "express";
-import { ProductRouter } from "./product";
+import { ProductRouter } from "./product.route";
 
 const _routes: Array<[string, Router]> = [["/api/v1", ProductRouter]];
 
