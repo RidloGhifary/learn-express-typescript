@@ -23,3 +23,11 @@ export const loginUserValidation = (payload: {
 
   return schema.validate(payload);
 };
+
+export const refreshSessionValidation = (payload: { refreshToken: string }) => {
+  const schema = Joi.object({
+    refreshToken: Joi.string().required(),
+  });
+
+  return schema.validate(payload);
+};
