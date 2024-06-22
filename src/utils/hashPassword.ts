@@ -1,7 +1,11 @@
 import bcrypt from "bcrypt";
 
-const HashPassword = (password: string) => {
+// TODO ENCODE PASSWORD
+export const HashPassword = (password: string) => {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 };
 
-export default HashPassword;
+// TODO DECODE PASSWORD
+export const CheckPassword = (password: string, hashedPassword: string) => {
+  return bcrypt.compareSync(password, hashedPassword);
+};

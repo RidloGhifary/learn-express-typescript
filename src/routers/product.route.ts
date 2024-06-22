@@ -5,11 +5,14 @@ import {
   GetProducts,
   UpdateProduct,
 } from "../controllers/product.controller";
+import { requireAdmin, requireUser } from "../middlewares/auth";
 
 export const ProductRouter: Router = Router();
 
-ProductRouter.route("/product").get(GetProducts).post(CreateProduct);
+ProductRouter.route("/product").get(GetProducts);
+ProductRouter.get("/product/:id", GetProducts);
+ProductRouter.post("/product", requireUser, CreateProduct);
 ProductRouter.route("/product/:id")
-  .get(GetProducts)
+  .all(requireAdmin)
   .patch(UpdateProduct)
   .delete(DeleteProduct);
