@@ -51,6 +51,9 @@ importers:
       '@types/jsonwebtoken':
         specifier: ^9.0.6
         version: 9.0.6
+      '@types/node':
+        specifier: ^20.14.7
+        version: 20.14.7
       concurrently:
         specifier: ^8.2.2
         version: 8.2.2

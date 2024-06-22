@@ -7,7 +7,7 @@ import {
 } from "../controllers/product.controller";
 import { requireAdmin, requireUser } from "../middlewares/auth";
 
-export const ProductRouter: Router = Router();
+export const ProductRouter = Router();
 
 ProductRouter.route("/product").get(GetProducts);
 ProductRouter.get("/product/:id", GetProducts);

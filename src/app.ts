@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express from "express";
 import cors from "cors";
 
 import router from "./routers";
@@ -7,7 +7,7 @@ import deserializeToken from "./middlewares/deserializeToken";
 // ! CONNECT MONGODB
 import "./utils/connectDb";
 
-const app: Application = express();
+const app = express();
 const port: number = 3200;
 
 app.use(express.json());

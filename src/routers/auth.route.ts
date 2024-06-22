@@ -5,7 +5,7 @@ import {
   RefreshSession,
 } from "../controllers/auth.controller";
 
-export const AuthRouter: Router = Router();
+export const AuthRouter = Router();
 
 AuthRouter.post("/register", RegisterUser);
 AuthRouter.post("/login", LoginUser);
